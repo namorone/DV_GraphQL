@@ -1,0 +1,15 @@
+{
+  books {
+    id
+    title
+    author {
+      name
+      biography {
+        text
+      }
+    }
+  }
+}
+
+
+
