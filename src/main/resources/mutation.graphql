@@ -1,7 +1,0 @@
-
-mutation {
-  updateBook(input: {id: "1", title: "New GraphQL in Action"}) {
-    id
-    title
-  }
-}
