@@ -1,0 +1,17 @@
+type Query {
+  _ping: String
+}
+
+type Event {
+  id: ID!
+  message: String!
+  timestamp: String!
+}
+
+type Mutation {
+  createEvent(message: String!): Event
+}
+
+type Subscription {
+  eventCreated: Event
+}

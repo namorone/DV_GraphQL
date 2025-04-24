@@ -1,11 +1,11 @@
-package com.example;
+package com.example.eventstream;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class La2Application {
+public class EventStreamApplication {
     public static void main(String[] args) {
-        SpringApplication.run(La2Application.class, args);
+        SpringApplication.run(EventStreamApplication.class, args);
     }
 }
