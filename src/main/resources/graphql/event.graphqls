@@ -1,5 +1,9 @@
 type Query {
-  _ping: String
+  """Список останніх N подій (за замовчуванням 10)"""
+  recentEvents(limit: Int = 10): [Event!]!
+
+  """Отримати подію за ID"""
+  event(id: ID!): Event
 }
 
 type Event {

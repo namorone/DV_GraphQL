@@ -5,20 +5,42 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
 import java.time.Instant;
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class EventService {
+    private final Sinks.Many<Event> sink =
+            Sinks.many().multicast().directBestEffort();
 
-    private final Sinks.Many<Event> sink = Sinks.many().multicast().directBestEffort();
+    private final List<Event> store = new CopyOnWriteArrayList<>();
 
     public Event createEvent(String message) {
-        Event event = new Event(UUID.randomUUID().toString(), message, Instant.now());
-        sink.tryEmitNext(event);
-        return event;
+        Event e = new Event(UUID.randomUUID().toString(), message, Instant.now());
+        store.add(e);
+        sink.tryEmitNext(e);
+        return e;
     }
 
-    public Flux<Event> getEvents() {
+    /** flux для підписок */
+    public Flux<Event> getEventsFlux() {
         return sink.asFlux();
+    }
+
+    /** читальні методи **/
+    public List<Event> recentEvents(int limit) {
+        return store.stream()
+                .sorted(Comparator.comparing(Event::timestamp).reversed())
+                .limit(limit)
+                .toList();
+    }
+
+    public Event findById(String id) {
+        return store.stream()
+                .filter(ev -> ev.id().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 }
