@@ -7,9 +7,12 @@
 brew install --cask temurin21
 
 
-/Users/rolio/Desktop/keycloak-24.0.5/bin/kc.sh start-dev --http-port=8080
+export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+java -version                          # має показати 21.0.7
+cd ~/Desktop/keycloak-24.0.5
+./bin/kc.sh start-dev --http-port=8080
 
-
+./gradlew clean bootRun
 ./gradlew bootRun
 
 ./gradlew test
