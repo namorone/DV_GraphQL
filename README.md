@@ -7,7 +7,7 @@
 
 Реальні запити виконуються до публічного API [https://countries.trevorblades.com](https://countries.trevorblades.com).
 
-
+./gradlew clean bootRun
 ./gradlew test -  запуск тесту
 
 http://localhost:8080/api/country/UA
