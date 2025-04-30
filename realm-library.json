@@ -1,0 +1,60 @@
+{
+  "realm": "library",
+  "enabled": true,
+  "displayName": "Library Demo Realm",
+
+  "roles": {
+    "realm": [
+      {
+        "name": "user",
+        "description": "Regular user – read-only GraphQL queries"
+      },
+      {
+        "name": "admin",
+        "description": "API editor – can execute mutations"
+      }
+    ]
+  },
+
+  "clientScopes": [
+    {
+      "name": "roles",
+      "description": "Add user roles to the access token",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "config": {
+            "multivalued": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    }
+  ],
+
+  "clients": [
+    {
+      "clientId": "library-api",
+      "name": "Library GraphQL API",
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "defaultClientScopes": [
+        "profile",
+        "email",
+        "roles",
+        "web-origins"
+      ]
+    }
+  ]
+}

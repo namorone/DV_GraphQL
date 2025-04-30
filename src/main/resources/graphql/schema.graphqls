@@ -1,0 +1,52 @@
+scalar Date
+
+interface ResponseType {
+  success: Boolean!
+  message: String
+}
+
+type Author {
+  id: ID!
+  name: String!
+  biography: String
+}
+
+type Book {
+  id: ID!
+  title: String!
+  publishedDate: Date!
+  author: Author!
+}
+
+type BookResponse implements ResponseType {
+  success: Boolean!
+  message: String
+  data: Book
+}
+
+type BooksResponse implements ResponseType {
+  success: Boolean!
+  message: String
+  data: [Book!]!
+}
+
+type AuthorResponse implements ResponseType {
+  success: Boolean!
+  message: String
+  data: Author
+}
+
+input AddBookInput {
+  title: String!
+  publishedDate: Date!
+  authorId: ID!
+}
+
+type Query {
+  book(id: ID!): BookResponse!
+  books: BooksResponse!
+}
+
+type Mutation {
+  addBook(input: AddBookInput!): BookResponse!
+}

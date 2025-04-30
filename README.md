@@ -2,16 +2,33 @@
 
 Ця аплікація демонструє використання **Spring for GraphQL** з боку **клієнта**.
 Після старту (`./gradlew bootRun`) у консолі зʼявляться:
-* список перших 5 країн Європи;
-* окремий рядок з назвою столиці України.
-
-Реальні запити виконуються до публічного API [https://countries.trevorblades.com](https://countries.trevorblades.com).
 
 
-./gradlew test -  запуск тесту
+brew install --cask temurin21
 
-http://localhost:8080/api/country/UA
 
-http://localhost:8080/api/continent/EU?limit=3
+/Users/rolio/Desktop/keycloak-24.0.5/bin/kc.sh start-dev --http-port=8080
 
-http://localhost:8080/api/continent/AS
+
+./gradlew bootRun
+
+./gradlew test
+
+token http://localhost:8080/realms/library/protocol/openid-connect/token
+
+http://localhost:8081/graphql
+
+read viewer { "query": "{ books { data { id title publishedDate } } }", "variables": {} }
+
+
+update editor only
+{
+"query": "mutation($inp:AddBookInput!){ addBook(input:$inp){ success message data { id title } } }",
+"variables": {
+"inp": {
+"title": "Test2",
+"publishedDate": "2025-05-01",
+"authorId": 2
+}
+}
+}
